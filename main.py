@@ -3,6 +3,7 @@ A simple memory GUESSING game
 Promps the user to input a value to guess then loops till guess is found or quit
 """
 import random
+import sys
 print('Hello welcome to a simple GUESSING game')
 PLAYING = True
 def is_integer(variable):
@@ -41,8 +42,17 @@ while PLAYING is True:
                     raise ValueError("Error! guess failed number check")
                 GUESS = int(guess)
                 if GUESS == number_to_guess:
-                    print('\nyay u win\n')
-                    GUESSING = False
+                    print('\nYay u win!\n')
+                    CONTINUE = True
+                    while CONTINUE is True:
+                        again = input("Wanna play again? (y/n) ")
+                        if again == 'y':
+                            GUESSING = False
+                            CONTINUE = False
+                        elif again =='n':
+                            PLAYING = False
+                            GUESSING = False
+                            CONTINUE = False
                 else:
                     print('\nWrong. Please try again\n')
             except ValueError:
@@ -54,3 +64,5 @@ while PLAYING is True:
             print('\nmin not a num')
     except MaxTooSmallError:
         print(f"\nCan\'t work with a max({guessMax}) that is smaller than the min({guessMin})")
+print("Thanks for playing :)")
+sys.exit()
