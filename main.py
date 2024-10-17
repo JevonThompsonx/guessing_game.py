@@ -17,9 +17,17 @@ class MaxTooSmallError(Exception):
     """
     def __init__(self, message):
         self.message = message
+QUIT_TUPLE = ('quit', 'q', 'Q', 'exit', 'lemme out')
 while PLAYING is True:
-    guessMax = input('Select a max number to guess: ')
+    print(f"At any time, any of these values can be used to quit: {QUIT_TUPLE}")
     guessMin = input('Select a minimum number to guess: ')
+    if guessMin in QUIT_TUPLE:
+        PLAYING = False
+        break
+    guessMax = input('Select a max number to guess: ')
+    if guessMax in QUIT_TUPLE:
+        PLAYING = False
+        break
     try:
         if int(guessMax) < int(guessMin):
             raise MaxTooSmallError("Max is too small")
@@ -31,6 +39,9 @@ while PLAYING is True:
         while GUESSING is True:
             guess = input("Take a guess: ")
             try:
+                if guess in QUIT_TUPLE:
+                    PLAYING = False
+                    break
                 guess = int(guess)
                 match guess:
                     case guess if guess > guessMax:
@@ -64,5 +75,6 @@ while PLAYING is True:
             print('\nmin not a num')
     except MaxTooSmallError:
         print(f"\nCan\'t work with a max({guessMax}) that is smaller than the min({guessMin})")
-print("Thanks for playing :)")
+print("Thanks for playing!! :) \n")
+print('Check out my github here: https://github.com/JevonThompsonx')
 sys.exit()
